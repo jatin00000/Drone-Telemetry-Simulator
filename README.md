@@ -122,3 +122,111 @@ DroneSimulator → TelemetryModel → MainWindow (UI)
 **Where:** System logging.
 
   * `Logger` — Ensures only a single, globally accessible, and thread-safe instance exists to handle all log messages.
+
+- - -
+## Unit & Integration Tests
+
+This project tests to ensure correctness of movement strategies and telemetry stability.
+All test executables are located inside:
+
+```
+/Tests
+   ├── test_randomwalk.cpp
+   └── test_hover.cpp
+```
+
+Qt’s built-in **QtTest framework** is used.
+
+---
+
+### 1. TestRandomWalk – RandomWalk Strategy Validation
+
+The **RandomWalkStrategy** introduces heading changes, variable speed, and real movement across each tick.
+The unit test ensures:
+
+#### **Test Cases**
+
+| Test                           | Purpose                                                                                       |
+| ------------------------------ | --------------------------------------------------------------------------------------------- |
+| `test_step_changes_position()` | Confirms that the strategy results in real movement (lat/long change) when initial speed > 0. |
+| `test_speed_non_negative()`    | Ensures the computed speed never becomes negative.                                            |
+| `test_heading_within_bounds()` | Ensures heading remains within 0–360 degrees.                                                 |
+
+
+### 2. TestHover – Hover Strategy Stability Tests
+
+The **HoverStrategy** simulates hovering in place with very small jitter/noise.
+This test ensures the drone does **not move significantly**.
+
+#### **Test Cases**
+
+| Test                          | Purpose                                                                                 |
+| ----------------------------- | --------------------------------------------------------------------------------------- |
+| `test_hover_small_movement()` | Ensures tiny jitter remains within a safe tolerance (EPS) and the drone does not drift. |
+
+- - -
+
+### How the Tests Are Built (CMake)
+
+Each test is compiled as a separate standalone executable using QtTest.
+
+---
+
+### Running Tests in Qt Creator
+#### **Method 1 – Run All Tests (Recommended)**
+
+Use the integrated test runner:
+
+1. Open the menu
+   **Tools → Tests**
+2. Select:
+   **Run All Tests**
+   *(Shortcut: `Alt + Shift + T`, then `Alt + A`)*
+
+This runs **both** test suites:
+
+* TestHover
+* TestRandomWalk
+
+Qt Creator will open the *Test Results* panel automatically.
+
+---
+
+#### **Method 2 – Run Selected Tests**
+
+1. Go to
+   **Tools → Tests**
+2. Choose:
+   **Run Selected Tests**
+   *(Shortcut: `Alt + Shift + T`, `Alt + R`)*
+3. Qt Creator will execute only the chosen test executable.
+
+This is useful when working on a single strategy.
+
+---
+
+### **Viewing Results**
+
+After running tests, open the **Test Results** panel:
+
+* Shows pass/fail status
+* Shows execution time (in ms)
+* Expands to show each test function
+* Green "PASS" indicators confirm success
+
+Example result view:
+
+```
+PASS    Executing test case TestHover
+PASS    Executing test function test_hover_small_movement
+PASS    Executing test case TestRandomWalk
+PASS    Executing test function test_step_changes_position
+PASS    Executing test function test_speed_non_negative
+PASS    Executing test function test_heading_within_bounds
+```
+
+You will also see a summary at the top such as:
+
+```
+Test summary: 8 passes, 0 fails (4 ms)
+```
