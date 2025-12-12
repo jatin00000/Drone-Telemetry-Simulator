@@ -4,7 +4,7 @@ A **Qt 6.x Desktop Application** that simulates real-time drone telemetry, inclu
 
 -----
 
-## Features
+## (I) Features
 
   * **Live Telemetry Simulation**
       * Auto-updating drone position (lat/long), calculated heading, speed, and altitude.
@@ -24,7 +24,7 @@ A **Qt 6.x Desktop Application** that simulates real-time drone telemetry, inclu
 
 -----
 
-##  Installation
+## (II) Installation
 
 1.  Install **Qt 6.x** (Core, Gui, Widgets, and WebSockets modules are required).
 2.  Download or clone the source code.
@@ -38,7 +38,7 @@ A **Qt 6.x Desktop Application** that simulates real-time drone telemetry, inclu
 
 -----
 
-##  Usage
+## (III) Usage
 
   * Launch the application.
   * Select a movement strategy (Random Walk / Hover).
@@ -50,7 +50,7 @@ The simulator updates position, heading, speed, altitude, and battery in real-ti
 
 -----
 
-##  Architecture Overview
+## (IV) Architecture Overview
 
 ### A. Core Components (Logic Layer)
 
@@ -93,7 +93,7 @@ The simulator updates position, heading, speed, altitude, and battery in real-ti
 
 -----
 
-## Design Patterns Used
+## (V) Design Patterns Used
 
 ### 1\. Strategy Pattern
 
@@ -124,7 +124,7 @@ DroneSimulator → TelemetryModel → MainWindow (UI)
   * `Logger` — Ensures only a single, globally accessible, and thread-safe instance exists to handle all log messages.
 
 - - -
-## Unit & Integration Tests
+## (VI) Unit & Integration Tests
 
 This project tests to ensure correctness of movement strategies and telemetry stability.
 All test executables are located inside:
